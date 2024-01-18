@@ -62,6 +62,8 @@ public class Tablero extends JPanel {
 
         captura(move);
 
+        move.pieza.esPrimermove = false;
+
     }
 
     public void captura(Move move){

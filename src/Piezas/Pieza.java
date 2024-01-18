@@ -15,6 +15,8 @@ public class Pieza {
     public String nombre;
     public int valor;
 
+    public boolean esPrimermove = true;
+
     BufferedImage sheet;{
         try {
             sheet = ImageIO.read(ClassLoader.getSystemResourceAsStream("540px-Chess_Pieces_Sprite.png"));

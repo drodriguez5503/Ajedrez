@@ -18,4 +18,11 @@ public class Rey extends Pieza{
         this.sprite = sheet.getSubimage(0, esBlanca ? 0 : sheetScale, sheetScale, sheetScale).getScaledInstance(sheetScale,sheetScale, BufferedImage.SCALE_SMOOTH);
 
     }
+
+    @Override
+    public boolean isValidMovement(int col, int fil) {
+        return Math.abs((col-this.col)*(fil-this.fil)) == 1 || Math.abs(col-this.col) + Math.abs(fil-this.fil) == 1;
+
+    }
+
 }

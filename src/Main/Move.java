@@ -18,7 +18,7 @@ public class Move {
         this.newFil = newFil;
 
         this.pieza = pieza;
-        this.captura = tablero.getPieza(newCol,newFil);
+        this.captura = tablero.getPieza(newCol,newFil); // Comprueba si hay una pieza en la casilla a la que se quiere ir
 
     }
 }
