@@ -20,9 +20,9 @@ public class Torre extends Pieza{
 
     public boolean isValidMovement(int col, int fil) {
         return (this.col == col || this.fil == fil);
-    }
+    } //Ver si el movimiento es válido
 
-    public boolean moveColisionaConPieza(int col, int fil){
+    public boolean moveColisionaConPieza(int col, int fil){ //Comprobar si hay otra pieza en el camino
 
         //Izquierda
         if(this.col>col){

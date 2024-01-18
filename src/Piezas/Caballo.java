@@ -21,6 +21,6 @@ public class Caballo extends Pieza{
 
     public boolean isValidMovement(int col, int fil){
         return Math.abs(col-this.col) * Math.abs(fil-this.fil) == 2;
-    }
+    } //Ver si el movimiento es válido
 
 }

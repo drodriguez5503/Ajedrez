@@ -30,9 +30,9 @@ public class Pieza {
         this.tablero = tablero;
     }
 
-    public boolean isValidMovement(int col, int fil){return true;}
+    public boolean isValidMovement(int col, int fil){return true;} //Ver si el movimiento es válido
 
-    public boolean moveColisionaConPieza(int col, int row) {return false;}
+    public boolean moveColisionaConPieza(int col, int row) {return false;} //Comprobar si hay otra pieza en el camino
 
     public void colorear(Graphics2D g2d){
         g2d.drawImage(sprite, posX , posY, null);
