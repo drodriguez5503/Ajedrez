@@ -25,10 +25,10 @@ public class Alfil extends Pieza{
     }
 
     @Override
-    public boolean moveColisionaConPieza(int col, int row) { //Comprobar si hay otra pieza en el camino
+    public boolean moveColisionaConPieza(int col, int fil) { //Comprobar si hay otra pieza en el camino
 
         // Arriba izquierda
-        if(col < this.col && this.fil > fil){
+        if(this.col > col && this.fil > fil){
             for(int i=1; i<Math.abs(this.col - col); i++){
                 if(tablero.getPieza(this.col - i,this.fil - i) != null){
                     return true;
