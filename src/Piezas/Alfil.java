@@ -13,7 +13,7 @@ public class Alfil extends Pieza{
         this.posY = fil * tablero.tamCasilla;
 
         this.esBlanca = esBlanca;
-        this.nombre = "Peón";
+        this.nombre = "Alfil";
 
         this.sprite = sheet.getSubimage(2 * sheetScale, esBlanca ? 0 : sheetScale, sheetScale, sheetScale).getScaledInstance(sheetScale,sheetScale, BufferedImage.SCALE_SMOOTH);
 
@@ -67,6 +67,5 @@ public class Alfil extends Pieza{
         }
 
         return false;
-
     }
 }

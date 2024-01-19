@@ -17,6 +17,10 @@ public class Tablero extends JPanel {
 
     Input input = new Input(this);
 
+    EscanerJaques escanerJaques = new EscanerJaques(this);
+
+    public int alPasoCasilla = -1 ;
+
     public Tablero(){
         this.setPreferredSize(new Dimension(columna*tamCasilla,fila*tamCasilla));
         this.addMouseListener(input);
@@ -51,23 +55,70 @@ public class Tablero extends JPanel {
             return false;
         }
 
+        if(escanerJaques.hayJaque(move)) {
+            return false;
+        }
+
         return true;
     }
 
     public void makeMove(Move move){
-        move.pieza.col = move.newCol;
-        move.pieza.fil = move.newFil;
-        move.pieza.posX = move.newCol*tamCasilla;
-        move.pieza.posY = move.newFil*tamCasilla;
+        if(move.pieza.nombre.equals("Peon")){
+            movePeon(move);
+        } else {
+            move.pieza.col = move.newCol;
+            move.pieza.fil = move.newFil;
+            move.pieza.posX = move.newCol * tamCasilla;
+            move.pieza.posY = move.newFil * tamCasilla;
 
-        captura(move);
+            move.pieza.esPrimermove = false;
 
-        move.pieza.esPrimermove = false;
+            captura(move.captura);
+
+        }
 
     }
 
-    public void captura(Move move){
-        listaPiezas.remove(move.captura);
+    public void movePeon(Move move){
+
+        //Al paso
+        int indiceColor = move.pieza.esBlanca ? 1 : -1 ;
+
+        if(getNumCasilla(move.newCol, move.newFil) == alPasoCasilla){
+            move.captura = getPieza(move.newCol,move.newFil + indiceColor);
+        }
+
+        if(Math.abs(move.pieza.fil-move.newFil)==2){
+            alPasoCasilla = getNumCasilla(move.newCol, move.newFil+indiceColor);
+        } else {
+            alPasoCasilla = -1;
+        }
+
+        // Promoción
+        indiceColor = move.pieza.esBlanca ? 0 : 7;
+
+        if(move.newFil == indiceColor) {
+            promoverPeon(move);
+        }
+
+        move.pieza.col = move.newCol;
+        move.pieza.fil = move.newFil;
+        move.pieza.posX = move.newCol * tamCasilla;
+        move.pieza.posY = move.newFil * tamCasilla;
+
+        move.pieza.esPrimermove = false;
+
+        captura(move.captura);
+    }
+
+    private void promoverPeon(Move move) {
+        listaPiezas.add(new Dama(this,move.newCol,move.newFil,move.pieza.esBlanca));
+
+        captura(move.pieza);
+    }
+
+    public void captura(Pieza pieza){
+        listaPiezas.remove(pieza);
     }
 
     public boolean mismoBando(Pieza p1, Pieza p2){
@@ -75,6 +126,21 @@ public class Tablero extends JPanel {
             return false;
         }
         return p1.esBlanca == p2.esBlanca;
+    }
+
+    public int getNumCasilla(int col,int fil){
+        return fil*fila+col;
+    }
+
+    Pieza encuentraRey(boolean esBlanca){
+        for(Pieza pieza : listaPiezas){
+            if(esBlanca == pieza.esBlanca && pieza.nombre.equals("Rey")){
+                return pieza;
+
+            }
+        }
+
+        return null;
     }
 
     public void anadirPiezas(){

@@ -12,7 +12,7 @@ public class Torre extends Pieza{
         this.posY = fil* tablero.tamCasilla;
 
         this.esBlanca = esBlanca;
-        this.nombre = "Peón";
+        this.nombre = "Torre";
 
         this.sprite = sheet.getSubimage(4 * sheetScale, esBlanca ? 0 : sheetScale, sheetScale, sheetScale).getScaledInstance(sheetScale,sheetScale, BufferedImage.SCALE_SMOOTH);
 

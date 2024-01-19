@@ -13,7 +13,7 @@ public class Dama extends Pieza{
         this.posY = fil* tablero.tamCasilla;
 
         this.esBlanca = esBlanca;
-        this.nombre = "Peón";
+        this.nombre = "Dama";
 
         this.sprite = sheet.getSubimage(sheetScale, esBlanca ? 0 : sheetScale, sheetScale, sheetScale).getScaledInstance(sheetScale,sheetScale, BufferedImage.SCALE_SMOOTH);
 

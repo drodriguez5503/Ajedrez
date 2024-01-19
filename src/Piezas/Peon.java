@@ -13,7 +13,7 @@ public class Peon  extends Pieza{
         this.posY = fil* tablero.tamCasilla;
 
         this.esBlanca = esBlanca;
-        this.nombre = "Peón";
+        this.nombre = "Peon";
 
         this.sprite = sheet.getSubimage(5 * sheetScale, esBlanca ? 0 : sheetScale, sheetScale, sheetScale).getScaledInstance(sheetScale,sheetScale, BufferedImage.SCALE_SMOOTH);
 
@@ -40,6 +40,16 @@ public class Peon  extends Pieza{
 
         // Captura derecha
         if(col == this.col + 1 && fil == this.fil - indiceColor && tablero.getPieza(col,fil) != null) {
+            return true;
+        }
+
+        //al paso izquierda
+        if(tablero.getNumCasilla(col,fil) == tablero.alPasoCasilla && col == this.col-1 && fil == this.fil - indiceColor && tablero.getPieza(col,fil+indiceColor) != null) {
+            return true;
+        }
+
+        //al paso derecha
+        if(tablero.getNumCasilla(col,fil) == tablero.alPasoCasilla && col == this.col + 1 && fil == this.fil - indiceColor && tablero.getPieza(col,fil+indiceColor) != null) {
             return true;
         }
 
