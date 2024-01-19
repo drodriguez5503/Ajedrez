@@ -18,5 +18,6 @@ public class Main {
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+
     }
 }

@@ -21,6 +21,10 @@ public class Tablero extends JPanel {
 
     public int alPasoCasilla = -1 ;
 
+    private boolean turnoBlancas = true;
+
+    public boolean ganador;
+
     public Tablero(){
         this.setPreferredSize(new Dimension(columna*tamCasilla,fila*tamCasilla));
         this.addMouseListener(input);
@@ -47,6 +51,10 @@ public class Tablero extends JPanel {
             return false;
         }
 
+        if (move.pieza.esBlanca != turnoBlancas) {
+            return false;
+        }
+
         if(!move.pieza.isValidMovement(move.newCol,move.newFil)) {
             return false;
         }
@@ -62,6 +70,26 @@ public class Tablero extends JPanel {
         return true;
     }
 
+    public boolean hayMovimientosPosibles(boolean esBlanca) {
+        for (Pieza pieza : listaPiezas) {
+            // Verifica si la pieza pertenece al jugador actual y si tiene al menos un movimiento válido
+            if (pieza.esBlanca == esBlanca) {
+                for (int f = 0; f < fila; f++) {
+                    for (int c = 0; c < columna; c++) {
+                        Move move = new Move(this, pieza, c, f);
+                        if (isValidMove(move)) {
+                            // Hay al menos un movimiento posible
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        // No se encontraron movimientos posibles para el jugador actual
+        return false;
+    }
+
     public void makeMove(Move move){
         if(move.pieza.nombre.equals("Peon")){
             movePeon(move);
@@ -69,14 +97,16 @@ public class Tablero extends JPanel {
             moveRey((move));
         }
 
-            move.pieza.col = move.newCol;
-            move.pieza.fil = move.newFil;
-            move.pieza.posX = move.newCol * tamCasilla;
-            move.pieza.posY = move.newFil * tamCasilla;
+        move.pieza.col = move.newCol;
+        move.pieza.fil = move.newFil;
+        move.pieza.posX = move.newCol * tamCasilla;
+        move.pieza.posY = move.newFil * tamCasilla;
 
-            move.pieza.esPrimermove = false;
+        move.pieza.esPrimermove = false;
 
-            captura(move.captura);
+        captura(move.captura);
+
+        turnoBlancas = !turnoBlancas;
 
     }
 
@@ -130,6 +160,8 @@ public class Tablero extends JPanel {
         listaPiezas.remove(pieza);
     }
 
+
+
     public boolean mismoBando(Pieza p1, Pieza p2){
         if(p1==null || p2==null){
             return false;
@@ -144,13 +176,30 @@ public class Tablero extends JPanel {
     Pieza encuentraRey(boolean esBlanca){
         for(Pieza pieza : listaPiezas){
             if(esBlanca == pieza.esBlanca && pieza.nombre.equals("Rey")){
+                repaint();
                 return pieza;
-
             }
         }
 
         return null;
     }
+
+    public boolean jaqueMate() {
+
+        boolean blancasTienenMovimientos = hayMovimientosPosibles(true);
+        boolean negrasTienenMovimientos = hayMovimientosPosibles(false);
+
+        if (!blancasTienenMovimientos && !negrasTienenMovimientos) {
+            if(blancasTienenMovimientos) { ganador=true; }
+            else if (negrasTienenMovimientos) { ganador=false; }
+            repaint();
+            return true;
+        }
+
+        return false;
+    }
+
+
 
     public void anadirPiezas(){
 
@@ -231,6 +280,14 @@ public class Tablero extends JPanel {
         //Pintar Piezas
         for(Pieza piezaActual : listaPiezas) {
             piezaActual.colorear(g2d);
+        }
+
+        //JaqueMate
+        if(jaqueMate()){
+            g2d.setFont(new Font("Arial",Font.PLAIN,60));
+            g2d.setColor(new Color(0,0,0));
+            g2d.drawString("GANAN LAS "+(ganador ? "BLANCAS":"NEGRAS"),350,450);
+
         }
 
     }

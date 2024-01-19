@@ -11,6 +11,7 @@ public class EscanerJaques {
     }
 
     public boolean hayJaque(Move move){
+
         Pieza rey = tablero.encuentraRey(move.pieza.esBlanca);
         assert rey != null;
 
