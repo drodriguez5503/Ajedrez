@@ -17,7 +17,7 @@ public class Tablero extends JPanel {
 
     Input input = new Input(this);
 
-    EscanerJaques escanerJaques = new EscanerJaques(this);
+    public EscanerJaques escanerJaques = new EscanerJaques(this);
 
     public int alPasoCasilla = -1 ;
 
@@ -65,7 +65,10 @@ public class Tablero extends JPanel {
     public void makeMove(Move move){
         if(move.pieza.nombre.equals("Peon")){
             movePeon(move);
-        } else {
+        } else if(move.pieza.nombre.equals(("Rey"))){
+            moveRey((move));
+        }
+
             move.pieza.col = move.newCol;
             move.pieza.fil = move.newFil;
             move.pieza.posX = move.newCol * tamCasilla;
@@ -75,6 +78,21 @@ public class Tablero extends JPanel {
 
             captura(move.captura);
 
+    }
+
+    public void moveRey(Move move){
+
+        if(Math.abs(move.pieza.col - move.newCol) == 2){
+            Pieza torre;
+            if(move.pieza.col < move.newCol){
+                torre = getPieza(7,move.pieza.fil);
+                torre.col = 5;
+            } else {
+                torre = getPieza(0,move.pieza.fil);
+                torre.col = 3;
+
+            }
+            torre.posX = torre.col * tamCasilla;
         }
 
     }
@@ -100,15 +118,6 @@ public class Tablero extends JPanel {
         if(move.newFil == indiceColor) {
             promoverPeon(move);
         }
-
-        move.pieza.col = move.newCol;
-        move.pieza.fil = move.newFil;
-        move.pieza.posX = move.newCol * tamCasilla;
-        move.pieza.posY = move.newFil * tamCasilla;
-
-        move.pieza.esPrimermove = false;
-
-        captura(move.captura);
     }
 
     private void promoverPeon(Move move) {
