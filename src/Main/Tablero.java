@@ -190,8 +190,8 @@ public class Tablero extends JPanel {
         boolean negrasTienenMovimientos = hayMovimientosPosibles(false);
 
         if (!blancasTienenMovimientos && !negrasTienenMovimientos) {
-            if(blancasTienenMovimientos) { ganador=true; }
-            else if (negrasTienenMovimientos) { ganador=false; }
+            if(!blancasTienenMovimientos) { ganador=false; }
+            else if (!negrasTienenMovimientos) { ganador=true; }
             repaint();
             return true;
         }
