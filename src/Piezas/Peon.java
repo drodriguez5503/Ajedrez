@@ -2,6 +2,7 @@ package Piezas;
 
 import Main.Tablero;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Peon  extends Pieza{
@@ -15,7 +16,7 @@ public class Peon  extends Pieza{
         this.esBlanca = esBlanca;
         this.nombre = "Peon";
 
-        this.sprite = sheet.getSubimage(5 * sheetScale, esBlanca ? 0 : sheetScale, sheetScale, sheetScale).getScaledInstance(sheetScale,sheetScale, BufferedImage.SCALE_SMOOTH);
+        this.sprite = sheet.getSubimage(5 * sheetScale, esBlanca ? 0 : sheetScale, sheetScale, sheetScale).getScaledInstance(sheetScale,sheetScale, Image.SCALE_SMOOTH);
 
     }
 

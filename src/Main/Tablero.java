@@ -190,10 +190,19 @@ public class Tablero extends JPanel {
         boolean negrasTienenMovimientos = hayMovimientosPosibles(false);
 
         if (!blancasTienenMovimientos && !negrasTienenMovimientos) {
-            if(!blancasTienenMovimientos) { ganador=false; }
-            else if (!negrasTienenMovimientos) { ganador=true; }
-            repaint();
-            return true;
+            // Verificar jaque y turno
+            Move dummyMove = new Move(this, this.piezaSeleccionada, -1, -1); // Puedes ajustar los valores según tu implementación
+            if (escanerJaques.hayJaque(dummyMove) && turnoBlancas) {
+                ganador = false; // El ganador es el que tiene el turno actual
+                repaint();
+                return true;
+
+            } else if (escanerJaques.hayJaque(dummyMove) && !turnoBlancas) {
+                ganador = true; // El ganador es el que tiene el turno actual
+                repaint();
+                return true;
+            }
+
         }
 
         return false;
