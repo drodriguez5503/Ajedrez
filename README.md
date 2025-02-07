@@ -1,2 +1,2 @@
 # Ajedrez
-Ajedrez en java usando JavaSwing 
+Ajedrez en java
